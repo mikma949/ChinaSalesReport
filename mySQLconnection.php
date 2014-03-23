@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$con=mysqli_connect("localhost","root","mysql","SalesReport");
+$con=mysqli_connect("localhost","root","mysql","Commission");
 
 // Check connection
 if (mysqli_connect_errno())
