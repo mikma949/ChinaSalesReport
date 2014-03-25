@@ -26,6 +26,16 @@ formController = function($scope, $http) {
 
 	// process the form
 	$scope.processForm = function() {
+
+		if($scope.isFormValid($scope.formData)){
+			alert("form is valid");
+			return;
+		} else {
+			alert("form is NOT valid");
+			return;
+		};
+
+
 		$scope.formData.locks = 1;
 		$scope.formData.stocks = 2;
 		$scope.formData.barrels = 3;
@@ -55,6 +65,110 @@ formController = function($scope, $http) {
             }); 
 
 	};
+
+	$scope.isFormValid = function(formData){
+		var totLocksSold = 20;		//get data from DB
+		var totBarrelsSold = 20;	//get data from DB
+		var totStocksSold = 20;		//get data from DB
+		$scope.errorToManyLocks = "";
+		$scope.errorToManyStocks = "";
+		$scope.errorToManyBarrels = "";
+		$scope.errorWrongDate = "";
+
+		
+		if(formData.locksSold <= totLocksSold &&
+			formData.stocksSold <= totStocksSold &&
+			formData.barrelsSold <= totBarrelsSold &&
+			$scope.isDateValid(formData.inDate)){
+			return true;
+		} else {
+			if(formData.locksSold > totLocksSold){
+				$scope.errorToManyLocks = 
+				"You can't sell these many locks";
+			}
+			if(formData.stocksSold > totStocksSold){
+				$scope.errorToManyStocks = 
+				"You can't sell these many stocks";
+			}
+			if(formData.barrelsSold > totBarrelsSold){
+				$scope.errorToManyBarrels = 
+				"You can't sell these many barrels";	
+			}
+			if (!$scope.isDateValid(formData.inDate)) {
+				$scope.errorWrongDate =
+				"Invalid date";
+			};
+			return false;
+		};
+
+
+	};
+
+	//check if date is valid
+	$scope.isDateValid = function(date){
+		
+		
+		var year = date.slice(0,4);
+		var month = date.slice(4,6);
+		var day = date.slice(6,8);
+
+		if (year > 1999 && year < 2151) {
+			if (month > 0 && month < 13) {
+
+				var daysInMonth = $scope.daysInMonth(month, year);
+
+				if (day > 0 && day <= daysInMonth) {
+					return true;
+				} else {
+					return false;	
+				};
+
+			} else {
+				return false;
+			};
+		} else {
+			return false;
+		};
+	};
+
+	//returns number of days in given mounth
+	//must check that the month is > 0 and < 13 before
+	$scope.daysInMonth = function(inmonth, inyear) {
+
+        var isleap = $scope.isLeapYear(inyear);
+        switch (Number(inmonth)) {
+        case 2:
+
+            if (isleap){
+                return 29;
+            } else {
+            	return 28;
+            };
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+        	return 30;
+            break;
+        default:
+        	return 31;
+        }
+    }
+
+    //check if the year is a leap year
+    $scope.isLeapYear = function(inyear) { 
+        var leap = false;
+        if (inyear % 4 == 0) { 
+            leap = true;
+            if (inyear > 1582) {
+                if ( inyear % 100 == 0 && inyear % 400 != 0) {
+                    leap = false;
+                };
+            };
+        };
+        return leap;
+    }
 
 	$scope.getData = function(){
 		//Get salesPersons to show in dropdown
