@@ -42,7 +42,7 @@ $result = mysqli_query($con,$sql);
 if($_POST['action']=='getItemsLeft'){
 $data = array(); 		// array to pass back data
 $year = substr($_POST[inDate],0,4);	
-$month = substr($_POST[inDate],5,2);
+$month = substr($_POST[inDate],4,2);
 $month = strtr ($month, array ('-' AND -'0' => ''));	
 $result = mysqli_query($con,"SELECT getItemsLeft(1, '$year', '$month') as locks, 
 									getItemsLeft(2, '$year', '$month') as stocks,
