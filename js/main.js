@@ -22,6 +22,17 @@ formController = function($scope, $http) {
 					{nameOfMonth:"October",number:"10"},{nameOfMonth:"November",number:"11"},
 					{nameOfMonth:"December",number:"12"},];
 
+	$scope.checkInput = function(input){
+		if (input < 40) {
+			return true;
+		} else {
+			return false;
+		};
+	};
+
+	$scope.vafan = function(input){
+		return input > 10;
+	};
 
 	// process the form
 	$scope.processForm = function() {
