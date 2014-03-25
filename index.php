@@ -60,22 +60,14 @@
 				<form name="inputForm" ng-submit="processForm()" method="post">
 					<!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
 
-<<<<<<< HEAD
+
 					<!-- DATE -->
-=======
-					<!-- Date -->
->>>>>>> 659581834c0ca4a0332054c1a6baabd0fd7d1c0c
 					<div class="form-group">
 						<label>Date</label>
 						<input type="date"
 						name="inDate"
-<<<<<<< HEAD
 						ng-change="getItemsLeft()"
 						ng-model="formData.inDate"/>
-=======
-						ng-model="formData.inDate" />
->>>>>>> 659581834c0ca4a0332054c1a6baabd0fd7d1c0c
-
 					</div>
 
 					<!-- SALES PERSON -->
@@ -86,7 +78,6 @@
 						ng-options="item.id as item.name for item in salesPersons">
 						<option value="">Select Person</option>
 
-<<<<<<< HEAD
 						</select>
 
 					</div>			
@@ -108,9 +99,7 @@
 						<input type="text"
 						name="locksSold"
 						ng-model="formData.locksSold"
-						ui-validate="{isInRange: '$value < 12'}"
-						required
-						isInRange rule passes: {{!!formData.locksSold.$error.isInRange}}> {{itemsLeft}}
+						> {{itemsLeft}}
 					</div>
 
 					<!-- #STOCKS-->
@@ -182,109 +171,6 @@
     		</div>
 		</div> <!-- col-sm-8 -->
 	</div> <!-- /container -->
-=======
-					</select>
 
-				</div>			
-
-				<div class="form-group">
-					<label>City</label>
-					<select name="city" 
-					ng-model="formData.city"
-					ng-options="item.id as item.name for item in cities">
-					<option value="">Select City</option>
-
-				</select>
-			</div>	
-
-			<!-- #LOCKS-->
-			<div class="form-group">
-				<label>#Locks sold</label>
-				<input type="text"
-				name="locksSold"
-				ng-model="formData.locksSold">
-			</div>
-
-			<!-- #STOCKS-->
-			<div class="form-group">
-				<label>#Stocks sold</label>
-				<input type="text"
-				name="stocksSold"
-				ng-model="formData.stocksSold">
-			</div>
-
-			<!-- #BARRELS-->
-			<div class="form-group">
-				<label>#Barrels sold</label>
-				<input type="text"
-				name="barrelsSold"
-				ng-model="formData.barrelsSold">
-			</div>
-
-
-
-			<!-- SUBMIT BUTTON -->
-			<button type="submit" class="btn btn-primary">Submit</button>
-
-
-		</form><br>
-
-		<br>
-		<table class="table table-striped table-bordered table-hover table-condensed">
-            <tr>
-            <!-- Create dropdown headers to choose and sort in the table -->
-                <th>
-                <label>Select Year</label><br>
-                <select name="table.year" 
-					ng-model="table.year">
-					<option value ="">All</option>
-					<option	ng-repeat="data in sales|unique:'year_report'"	
-							value ="{{data.year_report}}">
-							{{data.year_report}}
-					</option>
-				</th>
-            
-                <th>
-                <label>Select Month</label><br>
-                <select name="table.month" 
-					ng-model="table.month">
-					<option value ="">All</option>
-					<option	ng-repeat="data in sales|unique:'month_report'"	
-							value ="{{data.month_report}}">
-							{{data.month_report}}
-					</option>
-			    </th>
-
-
-                <th>Sales</th>
-
-
-                <th>Commission</th>
-            </tr>
-            <!-- Fill the table with data from database and add filters-->
-            <tr data-ng-repeat="data in sales
-             | filter:{id: table.id} 
-             | filter:{year_report: table.year}
-             | filter:{month_report: table.month}">
-                <td>{{data.year_report}}</td>
-                <td>{{data.month_report}}</td>
-                <td>{{data.total_sales}}</td>
-                <td>{{data.commission}}</td>
-              </tr>
-        </table><br>
-
-        <!-- Testkod  -->
- 
-
-
-        
-	</div>
-	<!-- col-sm-8 -->
-</div>
-<!-- /container -->
-
-
-
->>>>>>> 659581834c0ca4a0332054c1a6baabd0fd7d1c0c
 </body>
 </html>
