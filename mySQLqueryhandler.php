@@ -37,6 +37,7 @@ $result = mysqli_query($con,$sql);
 	echo json_encode($data);
 	}	
 }
+<<<<<<< HEAD
 //Getting number of items left to sell from mySQL
 if($_POST['action']=='getItemsLeft'){
 $data = array(); 		// array to pass back data
@@ -58,6 +59,8 @@ $result = mysqli_query($con,"SELECT getItemsLeft(1, '$year', '$month') as locks,
 	echo json_encode($data);
 	}	
 }
+=======
+>>>>>>> 659581834c0ca4a0332054c1a6baabd0fd7d1c0c
 //Getting sales statistics from mySQL
 if($_POST['action']=='getSales'){
 $data = array(); 		// array to pass back data
