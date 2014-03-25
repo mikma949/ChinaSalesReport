@@ -98,7 +98,10 @@
 						<label>#Locks sold</label>
 						<input type="text"
 						name="locksSold"
-						ng-model="formData.locksSold"> {{itemsLeft}}
+						ng-model="formData.locksSold"
+						ui-validate="{isInRange: '$value < 12'}"
+						required
+						isInRange rule passes: {{!!formData.locksSold.$error.isInRange}}> {{itemsLeft}}
 					</div>
 
 					<!-- #STOCKS-->
