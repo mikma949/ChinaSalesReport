@@ -3,7 +3,8 @@
 *
 * Description
 */
-var app = angular.module('salesReport', ['ui.utils']);
+
+var app = angular.module('salesReport', ['ui.utils','ui.bootstrap']);
 
 // create angular controller and pass in $scope and $http
 formController = function($scope, $http) {
@@ -12,6 +13,7 @@ formController = function($scope, $http) {
 	$scope.formData = {};
 	$scope.salesPersons = {};
 	$scope.cities = {};
+	$scope.itemsLeft ={};
 	$scope.years= {};
 	$scope.months={};
 	$scope.months =[{nameOfMonth:"All",number:""},{nameOfMonth:"January",number:"1"},
@@ -21,18 +23,6 @@ formController = function($scope, $http) {
 					{nameOfMonth:"August",number:"8"},{nameOfMonth:"September",number:"9"},
 					{nameOfMonth:"October",number:"10"},{nameOfMonth:"November",number:"11"},
 					{nameOfMonth:"December",number:"12"},];
-
-	$scope.checkInput = function(input){
-		if (input < 40) {
-			return true;
-		} else {
-			return false;
-		};
-	};
-
-	$scope.vafan = function(input){
-		return input > 10;
-	};
 
 	// process the form
 	$scope.processForm = function() {
@@ -49,7 +39,8 @@ formController = function($scope, $http) {
 			.success(function(data) {
 				
 				//console.log(data);
-				
+				$scope.getItemsLeft();
+
 				if (!data.success) {
             		// if not successful, bind errors to error variables
             		//$scope.errorYear = data.errors.year;
@@ -62,6 +53,7 @@ formController = function($scope, $http) {
             	// Getting the database with the new input
             	$scope.getData();
             }); 
+
 	};
 
 	$scope.getData = function(){
@@ -86,7 +78,7 @@ formController = function($scope, $http) {
 		.success(function(data) {
 			$scope.cities = data;
 		});
-
+		
 		//Get sales data
 		$http({
 		method  : 'POST',
@@ -98,6 +90,19 @@ formController = function($scope, $http) {
 			$scope.sales = data;
 		});
 	};
+
+$scope.getItemsLeft = function(){
+	//Get amount of items left to sell to show at insert
+		$http({
+		method  : 'POST',
+		url     : 'mySQLqueryhandler.php',
+ 	   	data    : 'action=getItemsLeft&'+$.param($scope.formData),  // pass in data as strings
+  		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+		})
+		.success(function(data) {
+			$scope.itemsLeft = data;
+		});
+}
 
 	// Getting the values from the database át startup
 	$scope.getData();
