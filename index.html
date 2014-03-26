@@ -67,8 +67,8 @@
 						ng-model="formData.inDate" 
 						required
 						ui-mask="{{'9999-99-99'}}"
-						placeholder="yyyy-mm-dd"/
-						ng-change="getItemsLeft()">
+						placeholder="yyyy-mm-dd"
+						ng-change="getItemsLeft()"/>
 						<p class="help-block">{{errorWrongDate}}</p>
 
 
@@ -109,12 +109,12 @@
 				name="locksSold"
 				ng-model="formData.locksSold"
 				ng-pattern="/^[0-9]*$/"
-           		required>
+           		required> {{itemsLeft.locks}}
 
            		<!-- Error messages -->
 			    <p ng-show="inputForm.locksSold.$error.pattern" 
 			    class="help-block">Only numbers</p>
-			    <p class="help-block">{{errorToManyLocks}}</p>
+			    <p class="help-block">{{errorTooManyLocks}}</p>
 			</div>
 
 			<!-- #STOCKS-->
@@ -123,16 +123,15 @@
 				<input type="text"
 				name="stocksSold"
 				ng-model="formData.stocksSold"
-				ng-maxlength="2"
-           		ng-pattern="/^[0-9]*$/" 
-           		required>
+				ng-pattern="/^[0-9]*$/" 
+           		required> {{itemsLeft.stocks}}
 
            		<!-- Error messages -->
            		<p ng-show="inputForm.stocksSold.$error.pattern" 
 				class="help-block">Only numbers</p>
 			    <p ng-show="inputForm.stocksSold.$error.maxlength" 
 			    class="help-block">Input too long</p>
-			    <p class="help-block">{{errorToManyStocks}}</p>
+			    <p class="help-block">{{errorTooManyStocks}}</p>
 			</div>
 
 			<!-- #BARRELS-->
@@ -143,20 +142,24 @@
 				ng-model="formData.barrelsSold"
 				ng-maxlength="2"
            		ng-pattern="/^[0-9]*$/" 
-           		required>
+           		required> {{itemsLeft.barrels}}
 
            		<!-- Error messages -->
            		<p ng-show="inputForm.barrelsSold.$error.pattern" 
 			    class="help-block">Only numbers</p>
 			    <p ng-show="inputForm.barrelsSold.$error.maxlength" 
 				class="help-block">Input too long</p>
-				<p class="help-block">{{errorToManyBarrels}}</p>        
+				<p class="help-block">{{errorTooManyBarrels}}</p>        
 			</div>
 
 			<!-- SUBMIT BUTTON -->
 			<button type="submit" class="btn btn-primary"
-			ng-disabled="!(!!formData.barrelsSold && !!formData.stocksSold && !!formData.locksSold  && 
-			!!formData.inDate && !!formData.salesPerson && !!formData.city)">Submit</button>
+			ng-disabled="!(	!!formData.barrelsSold && 
+							!!formData.stocksSold && 
+							!!formData.locksSold  && 
+							!!formData.inDate && 
+							!!formData.salesPerson && 
+							!!formData.city)">Submit</button>
 
 		</form>
 

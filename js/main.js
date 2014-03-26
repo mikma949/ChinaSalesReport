@@ -23,19 +23,26 @@ formController = function($scope, $http) {
 					{nameOfMonth:"August",number:"8"},{nameOfMonth:"September",number:"9"},
 					{nameOfMonth:"October",number:"10"},{nameOfMonth:"November",number:"11"},
 					{nameOfMonth:"December",number:"12"},];
+	
+
+
+
 
 	// process the form
 	$scope.processForm = function() {
-
+		$scope.getItemsLeft();
 		if($scope.isFormValid($scope.formData)){
-			alert("form is valid");
-			return;
+			
+			$scope.send();
+			$scope.getItemsLeft();
 		} else {
 			alert("form is NOT valid");
-			return;
+			
 		};
 
+	};
 
+	$scope.send = function(){
 		$scope.formData.locks = 1;
 		$scope.formData.stocks = 2;
 		$scope.formData.barrels = 3;
@@ -49,8 +56,6 @@ formController = function($scope, $http) {
 			.success(function(data) {
 				
 				//console.log(data);
-				$scope.getItemsLeft();
-
 				if (!data.success) {
             		// if not successful, bind errors to error variables
             		//$scope.errorYear = data.errors.year;
@@ -64,35 +69,40 @@ formController = function($scope, $http) {
             	$scope.getData();
             }); 
 
-	};
+	}
 
 	$scope.isFormValid = function(formData){
-		var totLocksSold = 20;		//get data from DB
-		var totBarrelsSold = 20;	//get data from DB
-		var totStocksSold = 20;		//get data from DB
-		$scope.errorToManyLocks = "";
-		$scope.errorToManyStocks = "";
-		$scope.errorToManyBarrels = "";
-		$scope.errorWrongDate = "";
+		$scope.getItemsLeft();
+		var totLocksLeft = Number($scope.itemsLeft.locks);		//get data from DB
+		var totStocksLeft = Number($scope.itemsLeft.stocks);	//get data from DB
+		var totBarrelsLeft = Number($scope.itemsLeft.barrels);	//get data from DB
 
-		
-		if(formData.locksSold <= totLocksSold &&
-			formData.stocksSold <= totStocksSold &&
-			formData.barrelsSold <= totBarrelsSold &&
+		var locksToSell = Number(formData.locksSold);
+		var stocksToSell = Number(formData.stocksSold);
+		var barrelsToSell = Number(formData.barrelsSold);
+
+		$scope.errorTooManyLocks = "";
+		$scope.errorTooManyStocks = "";
+		$scope.errorTooManyBarrels = "";
+		$scope.errorWrongDate = "";
+				
+		if(locksToSell <= totLocksLeft &&
+			stocksToSell <= totStocksLeft &&
+			barrelsToSell <= totBarrelsLeft &&
 			$scope.isDateValid(formData.inDate)){
 			return true;
 		} else {
-			if(formData.locksSold > totLocksSold){
-				$scope.errorToManyLocks = 
-				"You can't sell these many locks";
+			if(locksToSell > totLocksLeft){
+				$scope.errorTooManyLocks = 
+				"You can't sell this many locks";
 			}
-			if(formData.stocksSold > totStocksSold){
-				$scope.errorToManyStocks = 
-				"You can't sell these many stocks";
+			if(stocksToSell > totStocksLeft){
+				$scope.errorTooManyStocks = 
+				"You can't sell this many stocks";
 			}
-			if(formData.barrelsSold > totBarrelsSold){
-				$scope.errorToManyBarrels = 
-				"You can't sell these many barrels";	
+			if(barrelsToSell > totBarrelsLeft){
+				$scope.errorTooManyBarrels = 
+				"You can't sell this many barrels";	
 			}
 			if (!$scope.isDateValid(formData.inDate)) {
 				$scope.errorWrongDate =
@@ -104,9 +114,30 @@ formController = function($scope, $http) {
 
 	};
 
+	$scope.getTodaysDate = function(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+    		dd='0'+dd
+		} 
+
+		if(mm<10) {
+ 		   mm='0'+mm
+		} 
+
+		today = yyyy+''+mm+''+dd;
+		return today;
+	}
+
 	//check if date is valid
-	$scope.isDateValid = function(date){
-		
+	$scope.isDateValid = function(indate){
+		date = String(indate);
+		if(date.length < 8){
+			return true;
+		}else{
 		
 		var year = date.slice(0,4);
 		var month = date.slice(4,6);
@@ -130,7 +161,7 @@ formController = function($scope, $http) {
 			return false;
 		};
 	};
-
+}
 	//returns number of days in given mounth
 	//must check that the month is > 0 and < 13 before
 	$scope.daysInMonth = function(inmonth, inyear) {
@@ -205,7 +236,7 @@ formController = function($scope, $http) {
 		});
 	};
 
-$scope.getItemsLeft = function(){
+	$scope.getItemsLeft = function(){
 	//Get amount of items left to sell to show at insert
 		$http({
 		method  : 'POST',
@@ -215,10 +246,12 @@ $scope.getItemsLeft = function(){
 		})
 		.success(function(data) {
 			$scope.itemsLeft = data;
+
 		});
-}
+	}
 
 	// Getting the values from the database át startup
 	$scope.getData();
+	$scope.getItemsLeft();
 	
 };

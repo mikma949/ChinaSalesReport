@@ -1,0 +1,92 @@
+-- Create functions and triggers to Commission database. ----
+-- Copy paste the code below into insert query ----
+
+DROP FUNCTION IF EXISTS `getCommission`;
+		DELIMITER //
+		CREATE FUNCTION `getCommission`(`totalSales` int(11)) RETURNS int(11)
+			BEGIN
+				DECLARE thisBoundry, lastBoundry,loopDone int;
+				DECLARE thisCommission, restCommission float;
+				DECLARE thisPercent, lastPercent decimal(4,3);
+				DECLARE cur cursor for 
+					select boundry, percent 
+					from commission order by boundry ;
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET loopDone = 1;
+
+				SET loopDone=0;
+				SET thisCommission = 0;
+				SET restCommission = 0;
+				SET lastPercent = 0;
+				SET lastBoundry = 0;
+
+				OPEN cur;
+				set_commission : LOOP
+			
+				FETCH cur into thisBoundry, thisPercent;
+					if loopDone =1 then
+    					leave set_commission;
+    	 			end if;   
+		
+    				if totalSales > thisBoundry then
+						SET thisCommission = thisCommission + lastPercent*(thisBoundry-lastBoundry);
+	        			SET lastPercent = thisPercent;
+    	    			SET lastBoundry = thisBoundry;
+       					SET restCommission = (totalSales-thisBoundry)*thisPercent;
+					end if;
+			
+				end LOOP set_commission;	
+				CLOSE cur; 
+
+				SET thisCommission =thisCommission+restCommission;
+
+				RETURN thisCommission;
+			END //
+		DELIMITER ;
+
+-- -----------------------------------------------------------------------------
+DROP FUNCTION IF EXISTS `getItemsLeft`;
+		DELIMITER //
+		CREATE FUNCTION `getItemsLeft`(`product` INT(11), `year` INT(11), `month` INT(11)) 
+		RETURNS int(11) NO SQL
+			BEGIN
+				DECLARE itemsSold, itemsLeft, maxItems int;
+
+				SET itemsSold = (SELECT sum(quantity) FROM sales WHERE product_id = product AND YEAR(sale_date) = year AND MONTH(sale_date) = month);
+				SET maxItems = (SELECT maxAmount FROM product WHERE id=product);
+				SET itemsLeft = IFNULL(maxItems-itemsSold, maxItems);
+
+				RETURN itemsLeft;
+			END //
+		DELIMITER ;
+
+-- -----------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `sales_AINS`;
+		DELIMITER //
+			CREATE TRIGGER `sales_AINS` AFTER INSERT ON `sales`
+ 			FOR EACH ROW BEGIN
+
+			DECLARE thisMonth, thisYear, thisIncome int;
+			DECLARE thisCommission float;
+
+			SET thisMonth = month(new.sale_date);
+			SET thisYear = year(new.sale_date);
+			SET thisIncome = (select price from product where id=new.product_id)*new.quantity;
+			SET thisCommission = getCommission(thisIncome);
+
+			INSERT INTO report (year_report, month_report ,total_sales, commission) 
+						values (thisYear, thisMonth, thisIncome,thisCommission)
+						on duplicate key update 
+   				 id = new.id,
+    			total_sales = total_sales+thisIncome;
+    
+			END	//
+		DELIMITER ;
+
+-- -----------------------------------------------------------------------------
+DROP TRIGGER IF EXISTS `report_BUPD`;
+		DELIMITER //
+			CREATE TRIGGER `report_BUPD` BEFORE UPDATE ON `report`
+ 			FOR EACH ROW set new.commission = getCommission(new.total_sales)
+			//
+		DELIMITER ;
+

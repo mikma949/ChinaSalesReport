@@ -1,5 +1,6 @@
 <?php
 include "mySQLconnection.php";
+include "mySQLinitiate.php";
 
 //Getting sales_persons from mySQL
 if($_POST['action']=='getSalesPersons'){
@@ -43,7 +44,6 @@ if($_POST['action']=='getItemsLeft'){
 $data = array(); 		// array to pass back data
 $year = substr($_POST[inDate],0,4);	
 $month = substr($_POST[inDate],4,2);
-$month = strtr ($month, array ('-' AND -'0' => ''));	
 $result = mysqli_query($con,"SELECT getItemsLeft(1, '$year', '$month') as locks, 
 									getItemsLeft(2, '$year', '$month') as stocks,
 									getItemsLeft(3, '$year', '$month') as barrels");
@@ -53,10 +53,8 @@ $result = mysqli_query($con,"SELECT getItemsLeft(1, '$year', '$month') as locks,
 	}else{
 		// A result was gathered from the db
 		// Converting the query result to an array
-		while( $row = mysqli_fetch_assoc($result)){
-			$data[] = $row;
-		}
-	echo json_encode($data);
+		$data = mysqli_fetch_assoc($result);
+		echo json_encode($data);
 	}	
 }
 
