@@ -62,7 +62,7 @@ $result = mysqli_query($con,"SELECT getItemsLeft(1, '$year', '$month') as locks,
 if($_POST['action']=='getSales'){
 $data = array(); 		// array to pass back data
 		
-$sql="SELECT *	FROM report ORDER BY year_report,month_report";	
+$sql="SELECT *	FROM report ORDER BY year_report desc,month_report desc";	
 
 $result = mysqli_query($con,$sql);
 		

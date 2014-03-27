@@ -25,19 +25,13 @@ formController = function($scope, $http) {
 					{nameOfMonth:"December",number:"12"},];
 	
 
-
-
-
 	// process the form
 	$scope.processForm = function() {
 		$scope.getItemsLeft();
 		if($scope.isFormValid($scope.formData)){
-			
 			$scope.send();
-			$scope.getItemsLeft();
 		} else {
-			alert("form is NOT valid");
-			
+			// Error messages will show what fields were incorrect.
 		};
 
 	};
@@ -54,7 +48,17 @@ formController = function($scope, $http) {
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
     	})
 			.success(function(data) {
-				
+				$scope.getItemsLeft();
+				$scope.getData();
+				alert("Added: \n " 
+						+$scope.formData.locksSold +" locks, \n"
+						+$scope.formData.stocksSold +" stocks \n"
+						+$scope.formData.barrelsSold +" barrels \n"
+						+"to this months sales");
+				//Reset the form
+				$scope.formData.locksSold=null;
+				$scope.formData.stocksSold=null;
+				$scope.formData.barrelsSold=null;
 				//console.log(data);
 				if (!data.success) {
             		// if not successful, bind errors to error variables
@@ -63,16 +67,21 @@ formController = function($scope, $http) {
             	} else {
             		// if successful, bind success message to message
             		//$scope.message = data.message;
+            		alert("Error in sending to database")
             	}
 
-            	// Getting the database with the new input
-            	$scope.getData();
             }); 
 
 	}
 
 	$scope.isFormValid = function(formData){
 		$scope.getItemsLeft();
+
+		$scope.errorTooManyLocks = "";
+		$scope.errorTooManyStocks = "";
+		$scope.errorTooManyBarrels = "";
+		$scope.errorWrongDate = "";
+
 		var totLocksLeft = Number($scope.itemsLeft.locks);		//get data from DB
 		var totStocksLeft = Number($scope.itemsLeft.stocks);	//get data from DB
 		var totBarrelsLeft = Number($scope.itemsLeft.barrels);	//get data from DB
@@ -81,11 +90,7 @@ formController = function($scope, $http) {
 		var stocksToSell = Number(formData.stocksSold);
 		var barrelsToSell = Number(formData.barrelsSold);
 
-		$scope.errorTooManyLocks = "";
-		$scope.errorTooManyStocks = "";
-		$scope.errorTooManyBarrels = "";
-		$scope.errorWrongDate = "";
-				
+			
 		if(locksToSell <= totLocksLeft &&
 			stocksToSell <= totStocksLeft &&
 			barrelsToSell <= totBarrelsLeft &&
