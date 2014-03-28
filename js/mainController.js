@@ -35,7 +35,7 @@ addOrderController = function($scope, $http) {
 
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
        	data    : 'action=send&'+$.param($scope.formData),  // pass in data as strings
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
     	})
@@ -202,7 +202,7 @@ addOrderController = function($scope, $http) {
 		//Get salesPersons to show in dropdown
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
  	   	data    : 'action=getSalesPersons',  // pass in data as strings
   		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
 		})
@@ -213,7 +213,7 @@ addOrderController = function($scope, $http) {
 		//Get cities to show in dropdown
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
  	   	data    : 'action=getCities',  // pass in data as strings
   		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
 		})
@@ -224,7 +224,7 @@ addOrderController = function($scope, $http) {
 		//Get sales data
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
  	   	data    : 'action=getSales',  // pass in data as strings
   		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
 		})
@@ -237,7 +237,7 @@ addOrderController = function($scope, $http) {
 	//Get amount of items left to sell to show at insert
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
  	   	data    : 'action=getItemsLeft&'+$.param($scope.formData),  // pass in data as strings
   		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
 		})
@@ -273,7 +273,7 @@ showReportController = function($scope, $http) {
 		//Get sales data
 		$http({
 		method  : 'POST',
-		url     : 'mySQLqueryhandler.php',
+		url     : 'php/mySQLqueryhandler.php',
  	   	data    : 'action=getSales',  // pass in data as strings
   		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
 		})
