@@ -13,13 +13,13 @@ app.config(function($routeProvider) {
 
       // route for the about page
       .when('/addOrder', {
-        templateUrl : 'html/addOrder.html',
+        templateUrl : 'html/addOrder.php',
         controller  : 'addOrderController'
       })
 
       // route for the contact page
       .when('/showReport', {
-        templateUrl : 'html/showReport.html',
+        templateUrl : 'html/showReport.php',
         controller  : 'showReportController'
       });
   });

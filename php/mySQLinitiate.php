@@ -54,9 +54,9 @@ $create['SalesPersons'] =
 
 $populate['SalesPersons'] =
 		"INSERT INTO `sales_person` (`id`, `name`,`password`,`role`) VALUES
-			(1, 'Micke','Micke',1),
-			(2, 'Albin','Albin',1),
-			(3, 'Fredrik','Fredrik',1);";
+			(1, 'Micke','7214140f65353ffce02103596fc6d004',1),
+			(2, 'Albin','f0d7738a4515fb57ae41da4ede014b7a',1),
+			(3, 'Fredrik','875b9fc5c8b60d689717e465f2ef28bb',1);";
 
 $create['Report'] =
 		"CREATE TABLE IF NOT EXISTS `report` (

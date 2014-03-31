@@ -1,3 +1,5 @@
+<?php include "php/base.php"; ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -54,6 +56,25 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2">
 				<div name="titleHeader">
+
+					<?php
+					// If logged in, show main page
+					if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
+					{
+						 ?>
+						 <p> You are logged in as <code><?=$_SESSION['Username']?></code> and you are role <code><?=$_SESSION['Role']?></code>.</p>
+					     
+					     <p><a href="logout.php">Log out.</a></p>
+
+					    <?php
+					}
+					?>
+
+
+
+
+
+
 				<!-- PAGE HEADER -->
 					<header class="page-header"><h1>Missouri Gunsmith Sales Report</h1><br>
 

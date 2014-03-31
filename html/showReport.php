@@ -1,3 +1,14 @@
+<?php include($_SERVER['DOCUMENT_ROOT'].
+'/ChinaSalesReport/php/base.php');
+
+// Check if you are logged in
+if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
+{
+// Check that user have role 2 or 3
+if($_SESSION['Role'] > 1)
+{
+?>
+
 <div ng-controller="showReportController">
 	<!-- Inputform to set year and month to collect report -->
 	<div>
@@ -61,3 +72,22 @@
 		</tr>
 </table>
 </div>
+
+<?php
+//If user dont have high enuch role
+} else {
+	?>
+	<p>You do not have permission view this page</p>
+	<?php
+}
+?>
+
+
+<?php
+//If user is not logged in
+} else {
+	?>
+	<p>You have to be logged in to view this page. Log in <a href="index.php">here.</a></p>
+	<?php
+}
+?>

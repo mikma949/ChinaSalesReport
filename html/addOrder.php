@@ -1,3 +1,15 @@
+<?php include($_SERVER['DOCUMENT_ROOT'].
+'/ChinaSalesReport/php/base.php'); 
+
+// Check if you are logged in
+if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
+{
+
+// Check that user have role 1, 2 or 3
+if($_SESSION['Role'] > 0)
+{
+?>
+
 <!-- FORM -->
 <!-- pass in the variable if our form is valid or invalid -->
 <div>
@@ -107,3 +119,20 @@
 		</div>
 	</form>
 </div>
+
+<?php
+//If user dont have high enuch role
+} else {
+	?>
+	<p>You do not have permission view this page</p>
+	<?php
+}
+?>
+
+<?php
+} else {
+	?>
+	<p>You have to be logged in to view this page. Log in <a href="index.php">here.</a></p>
+	<?php
+}
+?>
