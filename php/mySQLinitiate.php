@@ -46,15 +46,17 @@ $populate['Product'] =
 $create['SalesPersons'] =
 		"CREATE TABLE IF NOT EXISTS `sales_person` (
   			`id` int(11) NOT NULL AUTO_INCREMENT,
-  			`name` varchar(45) DEFAULT NULL,
+  			`name` varchar(45) NOT NULL,
+  			`password` varchar(45) NOT NULL,
+  			`role` int(11) NOT NULL,
   			PRIMARY KEY (`id`)
 		);";
 
 $populate['SalesPersons'] =
-		"INSERT INTO `sales_person` (`id`, `name`) VALUES
-			(1, 'Micke'),
-			(2, 'Albin'),
-			(3, 'Fredrik');";
+		"INSERT INTO `sales_person` (`id`, `name`,`password`,`role`) VALUES
+			(1, 'Micke','Micke',1),
+			(2, 'Albin','Albin',1),
+			(3, 'Fredrik','Fredrik',1);";
 
 $create['Report'] =
 		"CREATE TABLE IF NOT EXISTS `report` (
