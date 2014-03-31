@@ -62,9 +62,12 @@
 					if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 					{
 						 ?>
-						 <p> You are logged in as <code><?=$_SESSION['Username']?></code> and you are role <code><?=$_SESSION['Role']?></code>.</p>
+						 <p id="welcomeText"> You are logged in as 
+						 <code class="varFromSessionToFront"><?=$_SESSION['Username']?></code> 
+						 and you are role <code class="varFromSessionToFront"><?=$_SESSION['Role']?></code>. 
+						 </p>
 					     
-					     <p><a href="logout.php">Log out.</a></p>
+					     
 
 					    <?php
 					}
@@ -76,8 +79,8 @@
 
 
 				<!-- PAGE HEADER -->
-					<header class="page-header"><h1>Missouri Gunsmith Sales Report</h1><br>
-
+					<header class="page-header"><h1>Missouri Gunsmith Sales Report</h1>
+						<a id="logOutLink" href="logout.php">Log out.</a><br>
 					
 						<ul class="nav navbar-nav navbar-left">
 							<li>

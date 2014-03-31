@@ -14,8 +14,13 @@
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<!-- JS ===================== -->
+    <!-- load angular -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.3/angular.min.js"></script-->
+    <script type="text/javascript" src="./lib/angular/angular.min.js"></script>
+
 </head>  
-<body>  
+<body ng-app="salesReport">  
 <div id="loginMainDiv">
 
 <?php
@@ -45,6 +50,8 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
     	echo "<h1>Success</h1>";
         echo "<p>We are now redirecting you to the member area.</p>";
         echo "<meta http-equiv='refresh' content='=2;index.php' />";
+        header("Location: index2.php");
+        exit;
     }
     else
     {
