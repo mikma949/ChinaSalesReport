@@ -60,6 +60,17 @@ showReportController = function($scope, $http) {
 
 	}
 	$scope.getSales = function(){
+		//Get the number of items sold per person of the month
+		$http({
+		method  : 'POST',
+		url     : 'php/mySQLqueryhandler.php',
+ 	   	data    : 'action=getItemsSold&'+$.param($scope.reportForm),  // pass in data as strings
+  		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+		})
+		.success(function(data) {
+			$scope.report.itemsSold = data;
+		});
+
 		//Get the total of the month
 		$http({
 		method  : 'POST',
@@ -69,8 +80,8 @@ showReportController = function($scope, $http) {
 		})
 		.success(function(data) {
 			$scope.report.sales = data;
-
 		});
+
 		//Get the sales per person of the month
 		$http({
 		method  : 'POST',
@@ -91,20 +102,10 @@ showReportController = function($scope, $http) {
 		})
 		.success(function(data) {
 			$scope.report.citySales = data;
-
-		});
-		//Get the number of items sold per person of the month
-		$http({
-		method  : 'POST',
-		url     : 'php/mySQLqueryhandler.php',
- 	   	data    : 'action=getItemsSold&'+$.param($scope.reportForm),  // pass in data as strings
-  		headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
-		})
-		.success(function(data) {
-			$scope.report.itemsSold = data;
 			$scope.controllCommission();
 			$scope.setTotalCommision();
 		});
+
 	}
 
 	//Controlls if a full rifle is sold. If not sets the commission to 0. 
