@@ -2,9 +2,9 @@
 include "mySQLconnection.php";
 
 $create['City'] =
-		"CREATE TABLE IF NOT EXISTS 
-			`city` (`id` int(11) NOT NULL AUTO_INCREMENT,
- 			 `name` varchar(45) DEFAULT NULL,
+		"CREATE TABLE IF NOT EXISTS `city` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+ 			`name` varchar(45) DEFAULT NULL,
   			PRIMARY KEY (`id`)
 		);";
 
@@ -84,6 +84,19 @@ $create['Sales'] =
   			KEY `fk_product_idx` (`product_id`)
 		);";
 
+$create['Role'] =
+		"CREATE TABLE IF NOT EXISTS `role` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+ 			`position` varchar(45) DEFAULT NULL,
+  			PRIMARY KEY (`id`)
+		);";
+
+$populate['Role']=
+		"INSERT INTO `role` (`id`, `position`) VALUES
+			(1, 'new employee'),
+			(2, 'sales person'),
+			(3, 'manager'),
+			(4, 'administrator');";
 
 //Send all queries to the database.	
 	foreach ($create as $input) {

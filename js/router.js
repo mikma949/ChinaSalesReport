@@ -11,13 +11,19 @@ app.config(function($routeProvider) {
         controller  : 'mainController'
       })*/
 
-      // route for the about page
+      // route for the add order page
       .when('/addOrder', {
         templateUrl : 'html/addOrder.php',
         controller  : 'addOrderController'
       })
 
-      // route for the contact page
+      // route for the admin page
+      .when('/admin', {
+        templateUrl : 'html/admin.php',
+        controller  : 'adminController'
+      })
+
+      // route for the show report page
       .when('/showReport', {
         templateUrl : 'html/showReport.php',
         controller  : 'showReportController'

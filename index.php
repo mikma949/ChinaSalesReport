@@ -45,6 +45,8 @@ elseif(!empty($_POST['username']) && !empty($_POST['password']))
     	echo "<h1>Success</h1>";
         echo "<p>We are now redirecting you to the member area.</p>";
         echo "<meta http-equiv='refresh' content='=2;index.php' />";
+        header("Location: index2.php");
+        exit;
     }
     else
     {

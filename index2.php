@@ -47,6 +47,7 @@
 	<script src="js/app.js" type="text/javascript"></script>
 	<script src="js/addOrderController.js" type="text/javascript"></script>
 	<script src="js/showReportController.js" type="text/javascript"></script>
+	<script src="js/adminController.js" type="text/javascript"></script>
 	<script src="js/router.js" type="text/javascript"></script>
 	
 </head>
@@ -88,6 +89,11 @@
 							<li>
 								<a href="#showReport" name="navLink">
 									<i ></i> Report
+								</a>
+							</li>
+							<li>
+								<a href="#admin" name="navLink">
+									<i ></i> Admin
 								</a>
 							</li>
 						</ul>
