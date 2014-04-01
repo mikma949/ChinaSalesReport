@@ -59,3 +59,25 @@ th{
 	text-align: left;
 	clear: both;	
 }
+#logOutLink
+{
+	float: right;
+	font-size: 150%;
+	
+}
+#welcomeText
+{
+	float: left;
+	width: auto;
+}
+.page-header
+{
+	clear: both;	
+}
+.varFromSessionToFront
+{
+	color: black;
+	background-color: white;
+	font-weight: bold;
+	font-size: 150%;
+}

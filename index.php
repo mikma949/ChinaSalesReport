@@ -14,8 +14,13 @@
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<!-- JS ===================== -->
+    <!-- load angular -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.3/angular.min.js"></script-->
+    <script type="text/javascript" src="./lib/angular/angular.min.js"></script>
+
 </head>  
-<body>  
+<body ng-app="salesReport">  
 <div id="loginMainDiv">
 
 <?php

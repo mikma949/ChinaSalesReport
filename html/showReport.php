@@ -4,8 +4,8 @@
 // Check if you are logged in
 if(!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username']))
 {
-// Check that user have role 2 or 3
-if($_SESSION['Role'] > 1)
+// Check that user have role 3 or 4
+if($_SESSION['Role'] > 2)
 {
 ?>
 

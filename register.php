@@ -19,8 +19,6 @@
 if(!empty($_POST['username']) && !empty($_POST['password']))
 {
 	$username = mysql_real_escape_string($_POST['username']);
-    $id = mysql_real_escape_string($_POST['id']);
-    $role = mysql_real_escape_string($_POST['role']);
     $password = md5(mysql_real_escape_string($_POST['password']));
     
 	 $checkusername = mysql_query("SELECT * FROM sales_person WHERE name = '".$username."'");
@@ -32,7 +30,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
      }
      else
      {
-     	$registerquery = mysql_query("INSERT INTO sales_person (id, name, password, role) VALUES('".$id."', '".$username."', '".$password."', '".$role."')");
+     	$registerquery = mysql_query("INSERT INTO sales_person (name, password, role) VALUES('".$username."', '".$password."', '1')");
         if($registerquery)
         {
         	echo "<h1>Success</h1>";
@@ -59,10 +57,6 @@ else
         <input type="text" name="username" id="username" /><br />
 		<label class="registerLable" for="password">Password:</label>
         <input type="password" name="password" id="password" /><br />
-        <label class="registerLable" for="id">id:</label>
-        <input type="text" name="id" id="ir" /><br />
-        <label class="registerLable" for="role">Role:</label>
-        <input type="text" name="role" id="role" /><br />
         <input type="submit" name="register" id="register" value="Register" />
 	</fieldset>
 	</form>
